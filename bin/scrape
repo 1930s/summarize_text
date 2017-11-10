@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+const program = require('commander');
+const path = require('path');
+const mkdirp = require('mkdirp')
+const scrapers = require('../textsum/scraper');
+
+
+program.version('0.1.0')
+  .description('scrape sites and parse as datasets.')
+  .parse(process.argv);
+
+const datasets = program.args;
+const datadir = 'data';
+const options = {};
+
+(async () => {
+  await Promise.all(datasets.map((name) => {
+    const scraper = new (scrapers.lookup(name))(options);
+    const dir = path.join(datadir, name);
+    mkdirp.sync(dir)
+    return scraper.fetch(dir);
+  }));
+  console.log('finished.')
+})();

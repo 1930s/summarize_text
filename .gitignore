@@ -1,0 +1,11 @@
+article_model
+/*.egg-info
+/dist
+/build
+/data
+/records
+__pycache__
+
+node_modules
+npm-debug.log
+.DS_Store
