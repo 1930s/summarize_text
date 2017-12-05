@@ -18,7 +18,7 @@ npm i && python setup.py install
    the landing page articles (extracts the `href` according to the attribute `data-post-id`). Finally,
    it visits each article page, finds the Medium API from the landing page, it looks like this:
 
-   ```htm,
+   ```html
    <script>
    // <![CDATA[
    window["obvInit"]({"value":{...}});
