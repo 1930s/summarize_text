@@ -18,11 +18,11 @@ npm i && python setup.py install
    the landing page articles (extracts the `href` according to the attribute `data-post-id`). Finally,
    it visits each article page, finds the Medium API from the landing page, it looks like this:
 
-   ```html
+   ```htm,
    <script>
    // <![CDATA[
-   window["obvInit"]({"value":{...});
-   <script>
+   window["obvInit"]({"value":{...}});
+   </script>
    ```
 
    It uses `page.evaluate(...)` to perform a `regexp` on the script content, parses it as JSON and
@@ -32,7 +32,7 @@ npm i && python setup.py install
 
    We now have raw data that we can use to do fun things.
 
-2. Convert raw data to tensorflow records of examples.
+2. Convert raw data to numpy records of examples.
 
    ```sh
    bin/records --src=data/medium --dst=records/medium --pad
@@ -40,9 +40,9 @@ npm i && python setup.py install
 
    This takes the raw data from `src` and serializes it as `textsum.Article` objects for consumption.
    As it is serializing, it tokenizes all the features (`title`, `subtitle`, ...) as mentioned in **2**.
-   It saves all these as `tf.train.Example`s and stores them in `dst` by `topic`. Next, the examples
-   are piped into a `np.ndarray` as a `*.npy` files. This comes in handy to be used with the
-   native `tf.data` API, it's like **hadoop** or **spark** but with compatibility with **tensorflow**.
+   It saves all these as `np.ndarray`s and stores them in `dst` by `topic`. Next, the examples
+   are piped to `*.npy` files. This comes in handy to be used with the
+   native `tf.data` API, it's like **hadoop** or **spark** but native compatibility with **tensorflow**.
    Finally, all the record `tokens` we collected for each topic, is collected in a `set`, so we don't
    store all tokens in memory to avoid repetition, this is done in a `map->reduce` fashion. The tokens
    are gathered by `topic` on a individual thread as a `set` of `str`s and the `union` operation reduces
@@ -58,6 +58,6 @@ npm i && python setup.py install
     --model_dir=article_model \
     --dataset_dir=records/medium \
     --input_feature='text' \
-    --target_feature='description' \
+    --target_feature='title' \
     --schedule='train'
   ```
