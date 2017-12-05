@@ -26,17 +26,17 @@ def main(_):
     use_bidirectional=True,
     shuffle_buffer_size=100,
     epochs=10000,
-    learning_rate=1e-4,
+    learning_rate=1e-3,
     max_gradient_norm=5.,
-    input_embedding_size=512,
-    target_embedding_size=512,
+    input_embedding_size=128,
+    target_embedding_size=128,
     input_encoder_cell_type='lstm',
     target_decoder_cell_type='lstm',
     attention_mechanism='luong',
-    input_n_encoder_units=128,
-    input_n_encoder_layers=8,
-    target_n_decoder_units=128,
-    target_n_decoder_layers=8)
+    input_n_encoder_units=256,
+    input_n_encoder_layers=4,
+    target_n_decoder_units=256,
+    target_n_decoder_layers=1)
 
   mode = None
   if FLAGS.schedule == 'train':
@@ -48,7 +48,7 @@ def main(_):
                          mode=mode,
                          input_feature=FLAGS.input_feature,
                          target_feature=FLAGS.target_feature,
-                         validation_size=10,
+                         validation_size=1,
                          max_input_sequence_length=Article.max_lookup[FLAGS.input_feature],
                          max_target_sequence_length=Article.max_lookup[FLAGS.target_feature],
                          dataset_dir=FLAGS.dataset_dir,

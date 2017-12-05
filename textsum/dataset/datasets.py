@@ -117,8 +117,8 @@ def run_article_experiment(model, hparams,
                            dataset_dir='records/medium',
                            model_dir='model',
                            seed=0,
-                           restore=False,
-                           just_evaluate_me=False):
+                           restore=True,
+                           just_evaluate_me=True):
   """Creates a set of `tf.contrib.learn` API tools for running an experiment on a model.
 
   Args:

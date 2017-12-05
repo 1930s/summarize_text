@@ -1,6 +1,6 @@
 # running
 
-**Before** you start slinging, do this shit first:
+**Before** you start slinging, do this first (> Node 7, > Python 2 or 3):
 
 ```sh
 npm i && python setup.py install
@@ -41,7 +41,7 @@ npm i && python setup.py install
    This takes the raw data from `src` and serializes it as `textsum.Article` objects for consumption.
    As it is serializing, it tokenizes all the features (`title`, `subtitle`, ...) as mentioned in **2**.
    It saves all these as `tf.train.Example`s and stores them in `dst` by `topic`. Next, the examples
-   are piped into a `tf.data.Record` as a `*.tfrecord` files. This comes in handy to be used with the
+   are piped into a `np.ndarray` as a `*.npy` files. This comes in handy to be used with the
    native `tf.data` API, it's like **hadoop** or **spark** but with compatibility with **tensorflow**.
    Finally, all the record `tokens` we collected for each topic, is collected in a `set`, so we don't
    store all tokens in memory to avoid repetition, this is done in a `map->reduce` fashion. The tokens

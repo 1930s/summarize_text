@@ -118,7 +118,9 @@ class ArticleModel(object):
       train_helper = tf.contrib.seq2seq.TrainingHelper(target_embed, target_sequence_length)
 
       pred_helper = tf.contrib.seq2seq.GreedyEmbeddingHelper(
-          target_embeddings, start_tokens=tf.to_int32(start_tokens), end_token=2)
+          target_embeddings,
+          start_tokens=tf.to_int32(start_tokens),
+          end_token=2)
 
       def decode(helper, scope, reuse=None):
         with tf.variable_scope(scope, reuse=reuse):
@@ -126,7 +128,8 @@ class ArticleModel(object):
           cell = tf.nn.rnn_cell.MultiRNNCell([cell() for _ in range(self._hparams.target_n_decoder_layers)],
                                              state_is_tuple=True)
           attention_mechanism = self._select_attention(self._hparams.attention_mechanism)(
-              num_units=self._hparams.target_n_decoder_units, memory=encoder_outputs,
+              num_units=self._hparams.target_n_decoder_units,
+              memory=encoder_outputs,
               memory_sequence_length=input_sequence_length)
           attn_cell = tf.contrib.seq2seq.AttentionWrapper(
               cell, attention_mechanism,
@@ -143,7 +146,7 @@ class ArticleModel(object):
               decoder=decoder,
               output_time_major=False,
               impute_finished=True,
-              maximum_iterations=tf.reduce_max(target_sequence_length)
+              maximum_iterations=tf.reduce_max(target_sequence_length) * 2
           )
           return outputs[0]
 
