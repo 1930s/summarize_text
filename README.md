@@ -1,4 +1,12 @@
-# running
+# Medium Text Summarization
+
+This is an attempt to model Medium's digest by topic. It's a very simple experiment that uses
+a combination of (high-dimensional) word embeddings and dynamic bi-directional encoding
+on article features. This is a proof-of-concept for modeling "live" data that is "streamed" and is
+available publicly. There are models for headless web `Scraper`s and dataset models for natural
+language articles.
+
+# Running
 
 **Before** you start slinging, do this first (> Node 7, > Python 2 or 3):
 
